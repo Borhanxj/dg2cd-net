@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# datasets and generated domains — never commit
+data/
+runs/
+*.pth
+*.ckpt
