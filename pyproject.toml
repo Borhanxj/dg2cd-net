@@ -20,14 +20,10 @@ dependencies = [
 [project.optional-dependencies]
 synth = ["diffusers>=0.30", "transformers>=4.44", "accelerate>=0.33"]
 lora  = ["peft>=0.12"]
-dev   = ["pytest>=8.0", "pytest-cov", "ruff"]
+dev   = ["ruff"]
 
 [tool.setuptools.packages.find]
 include = ["dg2cd*"]
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-filterwarnings = ["ignore::DeprecationWarning"]
 
 [tool.ruff]
 line-length = 100
