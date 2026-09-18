@@ -1,12 +1,19 @@
+@'
 __pycache__/
 *.py[cod]
 .venv/
+venv/
 *.egg-info/
 .pytest_cache/
 .ruff_cache/
+.vscode/
+.idea/
 
-# datasets and generated domains — never commit
-data/
+# datasets, generated synthetic domains, checkpoints, run outputs
+data/*
+!data/.gitkeep
 runs/
+*.pt
 *.pth
 *.ckpt
+'@ | Set-Content -Encoding utf8 .gitignore
