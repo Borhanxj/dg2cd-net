@@ -9,8 +9,8 @@ dataset:
   image_size: 224
   domains: [art_painting, cartoon, photo, sketch]
   source: photo
-  class_names: [dog, elepahant, giraffe, guitar, horse, house, person]
-  known_classes: [dog, elephant, girraffe, guitar]
+  class_names: [dog, elephant, giraffe, guitar, horse, house, person]
+  known_classes: [dog, elephant, giraffe, guitar]
 
 # Settings for the backbone and LoRA modules
 backbone:
@@ -67,3 +67,10 @@ eval:
   k_max: 1000
   kmeans_n_init: 10
   num_runs: 3
+
+# Settings for data augmentation
+augmentation:
+  rotation_degrees: 15
+  translate: [0.1, 0.1]
+  scale: [0.9, 1.1]
+  horizontal_flip: 0.5
