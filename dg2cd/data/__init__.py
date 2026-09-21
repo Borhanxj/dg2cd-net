@@ -9,6 +9,12 @@ from .synthetic_domains import (
     generate_all_domains,
     available_synthetic_domains,
 )
+from .episodes import(
+    Episode,
+    EpisodeSampler,
+    build_validation_dataset,
+    episode_class_mapping,
+)
 
 __all__ = [
     "PACSDataset",
@@ -18,4 +24,8 @@ __all__ = [
     "generate_synthetic_domain",
     "generate_all_domains",
     "available_synthetic_domains",
+    "Episode",
+    "EpisodeSampler",
+    "build_validation_dataset",
+    "episode_class_mapping",
 ]
