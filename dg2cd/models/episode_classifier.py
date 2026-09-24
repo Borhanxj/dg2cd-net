@@ -23,7 +23,7 @@ class EpisodeClassifier(nn.Module):
         self.unknown_index = num_known_classes # Last index
 
         if hidden_dim is None:
-            self.net = nn.Module = nn.Linear(in_features, self.num_outputs)
+            self.net = nn.Linear(in_features, self.num_outputs)
         else: 
             self.net = nn.Sequential(
                 nn.Linear(in_features, hidden_dim),
