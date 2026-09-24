@@ -35,9 +35,10 @@ episodic:
   lr: 0.1
   scheduler: cosine
   momentum: 0.9
-  weight_decay: 5.0e-4
+  weight_decay: 5.0e-5
   episode_known_range: [2, 3]
   episode_source_fraction: 1.0
+  grad_clip: 1.0
 
 # Settings for the loss function
 losses: 
@@ -45,7 +46,9 @@ losses:
   adv_alpha: 0.5
   margin_m: 0.7
   lambda_da: 0.2
-  grl_lambda: 1.0
+  w_con_u: 0.65
+  w_con_s: 0.35
+  mu_da: 1.0
 
 # Settings for the synthetic data generation 
 synthetic:
