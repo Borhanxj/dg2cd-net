@@ -38,7 +38,7 @@ def cluster_accuracy(
     # Square so the assignment is a full permuation even when K != #classes
     d = int(max(y_pred.max(), y_true.max()) + 1) # number of classes/clusters
     w = np.zeros((d, d), dtype=np.int64) # contingency matrix
-    np.add.at(w, (y_true, y_pred), 1)  # increment counts for each (true class, predicted cluster) pair
+    np.add.at(w, (y_pred, y_true), 1)  # increment counts for each (true class, predicted cluster) pair
 
     rows, cols = linear_sum_assignment(w, maximize=True) 
     cluster_to_class = np.full(d, -1, dtype=np.int64) 
