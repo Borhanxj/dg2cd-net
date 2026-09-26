@@ -1,3 +1,4 @@
+from .global_loop import run_episodic_training, validate_episode
 from .local_episode import train_local_episode
 from .task_vectors import (
     load_params,
@@ -10,6 +11,8 @@ from .task_vectors import (
 )
 
 __all__ = [
+    "run_episodic_training",
+    "validate_episode",
     "train_local_episode",
     "trainable_names",
     "snapshot",
