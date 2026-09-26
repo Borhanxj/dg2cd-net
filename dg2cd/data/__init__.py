@@ -8,6 +8,7 @@ from .synthetic_domains import (
     generate_synthetic_domain,
     generate_all_domains,
     available_synthetic_domains,
+    synthetic_root,
 )
 from .episodes import(
     Episode,
@@ -28,4 +29,5 @@ __all__ = [
     "EpisodeSampler",
     "build_validation_dataset",
     "episode_class_mapping",
+    "synthetic_root",
 ]

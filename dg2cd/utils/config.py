@@ -55,3 +55,26 @@ def load_config(path: str | Path) -> Config:
         raise ValueError(f"config root must be a mapping, got {type(data).__name__}")
 
     return Config(data)
+
+
+def apply_overrides(cfg: Config, overrides) -> Config:
+    """Apply dotted KEY=VALUE overrides, e.g. "episodic.lr=0.01".
+
+    Values are parsed as YAML, so 16 -> int, 0.01 -> float, true -> bool,
+    [2,3] -> list. Unknown keys raise: a typo like "episodic.lrr=0.1" must
+    fail loudly rather than silently leave the real setting unchanged.
+    """
+    for item in overrides:
+        if "=" not in item:
+            raise ValueError(f"override must be KEY=VALUE, got {item!r}")
+        key, raw = item.split("=", 1)
+        *parents, leaf = key.strip().split(".")
+        node = cfg
+        for part in parents:
+            if not isinstance(getattr(node, part, None), Config):
+                raise KeyError(f"unknown config section in {key!r}: {part!r}")
+            node = getattr(node, part)
+        if not hasattr(node, leaf):
+            raise KeyError(f"unknown config key: {key!r}")
+        setattr(node, leaf, Config._wrap(yaml.safe_load(raw)))
+    return cfg

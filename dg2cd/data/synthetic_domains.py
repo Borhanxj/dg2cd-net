@@ -22,6 +22,15 @@ FALLBACK_RECIPES: dict[str, dict[str, float]] = {
     "urban":  dict(hue=-0.05, brightness=0.90, contrast=1.25, saturation=0.65, blur=0.0),
 }
 
+def synthetic_root(cfg) -> Path:
+    """Cache directory for the CURRENT source's synthetic domains.
+
+    Synthetic domains are restyled copies of the source domain, so each
+    source needs its own set. Sharing one cache across sources would feed,
+    e.g., restyled photos to a sketch-source run.
+    """
+    return Path(cfg.synthetic.cache_dir) / cfg.dataset.source
+
 def _apply_recipe(image: Image.Image, recipe: dict[str, float]) -> Image.Image:
     """Photometric transformation of an image according to a recipe of parameters."""
     out = image
@@ -109,7 +118,7 @@ def generate_all_domains(cfg, overwrite: bool = False) -> dict[str, int]:
             source_root=cfg.dataset.root,
             source_domain=cfg.dataset.source,
             classes=known,
-            cache_dir=cfg.synthetic.cache_dir,
+            cache_dir=synthetic_root(cfg),
             domain_name=name,
             generator=cfg.synthetic.generator,
             overwrite=overwrite,

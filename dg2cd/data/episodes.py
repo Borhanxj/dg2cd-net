@@ -9,6 +9,7 @@ import torch
 from torch.utils.data import ConcatDataset, Dataset, Subset
 
 from .datasets import PACSDataset, known_novel_split
+from .synthetic_domains import synthetic_root
 
 
 @dataclass
@@ -81,12 +82,13 @@ class EpisodeSampler:
             )
         self.known_range = (lo, hi)
 
-        cache = Path(cfg.synthetic.cache_dir)
-        missing = [d for d in self.train_domains if not (cache / d).is_dir()]
+        self.synthetic_root = synthetic_root(cfg)
+        missing = [d for d in self.train_domains if not (self.synthetic_root / d).is_dir()]
         if missing:
             raise FileNotFoundError(
-                f"synthetic domains not generated: {missing}\n"
-                f"run scripts/generate_synthetic_domains.py first"
+                f"synthetic domains not generated for source "
+                f"{cfg.dataset.source!r}: {missing}\n"
+                f"run scripts/generate_synthetic_domains.py --source {cfg.dataset.source}"
             )
 
     def domain_order(self, num_episodes: int) -> list[str]:
@@ -143,7 +145,7 @@ class EpisodeSampler:
         # D_syn^eg carries the FULL known set -- that is where the episode's
         # novel classes live.
         synthetic = PACSDataset(
-            root=self.cfg.synthetic.cache_dir,
+            root=self.synthetic_root,
             domain=synthetic_domain,
             classes=self.known_classes,
             transform=self.transform,
@@ -189,7 +191,7 @@ def build_validation_dataset(
         labels: (N,) label for every sample, in dataset order.
     """
     known, _ = known_novel_split(cfg.dataset)
-    cache = Path(cfg.synthetic.cache_dir)
+    cache = synthetic_root(cfg)
 
     parts, label_chunks = [], []
     for domain in cfg.synthetic.valid_domains:
