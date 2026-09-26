@@ -70,6 +70,7 @@ eval:
   k_max: 1000
   kmeans_n_init: 10
   num_runs: 3
+  k_estimation_n_init: 3
 
 # Settings for data augmentation
 augmentation:
